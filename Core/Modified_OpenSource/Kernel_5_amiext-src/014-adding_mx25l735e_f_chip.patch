@@ -1,0 +1,12 @@
+diff -Naur linux-5.2.8/drivers/mtd/spi-nor/spi-nor.c linux.new/drivers/mtd/spi-nor/spi-nor.c
+--- linux-5.2.8/drivers/mtd/spi-nor/spi-nor.c	2020-02-20 13:29:25.966393000 +0800
++++ linux.new/drivers/mtd/spi-nor/spi-nor.c	2020-02-20 16:00:04.939018313 +0800
+@@ -1969,6 +1969,8 @@
+ 			 SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ)
+ 			 .fixups = &mx25l25635_fixups },
+ 	{ "mx25u25635f", INFO(0xc22539, 0, 64 * 1024, 512, SECT_4K | SPI_NOR_4B_OPCODES) },
++	{ "mx25l25735e",INFO(0xc22019, 0, 64 * 1024,  512, SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ | SPI_NOR_4B_OPCODES) .fixups = &mx25l25635_fixups},
++	{ "mx25u25735f", INFO(0xc22539, 0, 64 * 1024, 512, SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ | SPI_NOR_4B_OPCODES) },
+ 	{ "mx25v8035f",  INFO(0xc22314, 0, 64 * 1024,  16,
+ 			 SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
+ 	{ "mx25l25655e", INFO(0xc22619, 0, 64 * 1024, 512, 0) },

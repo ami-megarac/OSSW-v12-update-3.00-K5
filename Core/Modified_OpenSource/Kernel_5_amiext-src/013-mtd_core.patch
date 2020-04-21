@@ -1,0 +1,11 @@
+--- linux.old/drivers/mtd/mtdcore.c	2020-02-13 12:24:57.016188748 -0500
++++ linux/drivers/mtd/mtdcore.c	2020-02-13 12:26:56.027530643 -0500
+@@ -487,7 +487,7 @@
+ 
+ 	config.id = -1;
+ 	config.dev = &mtd->dev;
+-	config.name = mtd->name;
++	config.name = dev_name(&mtd->dev);
+ 	config.owner = THIS_MODULE;
+ 	config.reg_read = mtd_nvmem_reg_read;
+ 	config.size = mtd->size;

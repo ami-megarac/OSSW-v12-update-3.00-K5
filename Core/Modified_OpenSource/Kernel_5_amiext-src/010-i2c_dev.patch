@@ -1,0 +1,40 @@
+--- linux-5.2.8/drivers/i2c/i2c-dev.c	2020-01-02 14:09:09.610263365 -0500
++++ linux/drivers/i2c/i2c-dev.c	2020-01-02 12:03:10.796760843 -0500
+@@ -378,13 +378,37 @@
+ 	}
+ 	res = i2c_smbus_xfer(client->adapter, client->addr, client->flags,
+ 	      read_write, command, size, &temp);
++#if 0
+ 	if (!res && ((size == I2C_SMBUS_PROC_CALL) ||
+ 		     (size == I2C_SMBUS_BLOCK_PROC_CALL) ||
+ 		     (read_write == I2C_SMBUS_READ))) {
+ 		if (copy_to_user(data, &temp, datasize))
+ 			return -EFAULT;
+ 	}
++
+ 	return res;
++#endif
++	if ( res && (((size == I2C_SMBUS_BYTE) ||
++	              (size == I2C_SMBUS_BYTE_DATA) ||(size == I2C_SMBUS_WORD_DATA))&&
++		      (read_write == I2C_SMBUS_READ))) {
++		if (copy_to_user(data, &temp, datasize))
++			return -EFAULT;
++	}
++
++	if (  res && (size == I2C_SMBUS_BLOCK_DATA)&&(read_write == I2C_SMBUS_READ))
++	{
++		if (copy_to_user(data, &temp, datasize))
++			return -EFAULT;
++	}
++
++	if ( res && (((size == I2C_SMBUS_PROC_CALL) ||
++		      (size == I2C_SMBUS_BLOCK_PROC_CALL)) ||
++		      (read_write == I2C_SMBUS_READ))) {
++		if (copy_to_user(data, &temp, datasize))
++			return -EFAULT;
++	}
++
++	return 0;
+ }
+ 
+ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
